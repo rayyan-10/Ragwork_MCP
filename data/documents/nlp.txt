@@ -1,0 +1,110 @@
+Natural Language Processing (NLP)
+
+Natural Language Processing is a branch of Artificial Intelligence that focuses on enabling computers to understand, interpret, generate, and interact with human language. NLP bridges the gap between human communication and machine understanding, making it possible for computers to read text, hear speech, and respond in a meaningful way.
+
+Core Challenges in NLP
+Human language is inherently ambiguous, context-dependent, and constantly evolving. Key challenges include:
+- Ambiguity: Words and sentences can have multiple meanings depending on context.
+- Sarcasm and Irony: Difficult for machines to detect tone and intent.
+- Multilingualism: Thousands of languages with different grammar structures.
+- Informal Language: Slang, abbreviations, and typos in real-world text.
+- Coreference: Understanding that "he", "it", or "they" refers to a previously mentioned entity.
+
+Key NLP Tasks
+
+Text Preprocessing
+Before analysis, raw text must be cleaned and structured:
+- Tokenization: Splitting text into words or subwords (tokens).
+- Stopword Removal: Removing common words like "the", "is", "and" that carry little meaning.
+- Stemming: Reducing words to their root form (e.g., "running" → "run").
+- Lemmatization: More accurate root form using vocabulary (e.g., "better" → "good").
+- Part-of-Speech Tagging: Labeling words as nouns, verbs, adjectives, etc.
+- Named Entity Recognition (NER): Identifying names of people, places, organizations, dates.
+
+Text Classification
+Assigning predefined categories to text:
+- Sentiment Analysis: Determining if text is positive, negative, or neutral.
+- Spam Detection: Classifying emails as spam or not.
+- Topic Classification: Categorizing news articles by subject.
+
+Machine Translation
+Automatically translating text from one language to another. Modern systems like Google Translate use neural machine translation (NMT) based on transformer models.
+
+Question Answering
+Systems that read a passage and answer questions about it. Used in search engines, chatbots, and virtual assistants.
+
+Text Summarization
+- Extractive: Selects key sentences directly from the source text.
+- Abstractive: Generates new sentences that capture the main ideas, like a human would.
+
+Text Generation
+Producing coherent and contextually relevant text. Powered by language models like GPT, which predict the next word given previous context.
+
+Information Retrieval
+Finding relevant documents or passages from a large corpus based on a query. Used in search engines and RAG (Retrieval-Augmented Generation) systems.
+
+Speech Recognition and Synthesis
+- ASR (Automatic Speech Recognition): Converting spoken language to text (e.g., Siri, Google Assistant).
+- TTS (Text-to-Speech): Converting text to natural-sounding speech.
+
+NLP Techniques and Models
+
+Bag of Words (BoW)
+Represents text as a vector of word frequencies. Simple but ignores word order and context.
+
+TF-IDF (Term Frequency-Inverse Document Frequency)
+Weighs words by how often they appear in a document relative to the entire corpus. Useful for information retrieval.
+
+Word Embeddings
+Dense vector representations of words that capture semantic meaning:
+- Word2Vec: Learns word associations from large text corpora.
+- GloVe: Global Vectors for Word Representation.
+- FastText: Handles subword information, useful for rare words.
+
+Recurrent Neural Networks (RNNs) and LSTMs
+Sequential models that process text word by word, maintaining a hidden state. LSTMs (Long Short-Term Memory) solve the vanishing gradient problem for longer sequences.
+
+Transformers
+The dominant architecture in modern NLP, introduced in the paper "Attention Is All You Need" (2017). Key innovation is the self-attention mechanism, which allows the model to weigh the importance of each word relative to all others in a sequence simultaneously.
+
+BERT (Bidirectional Encoder Representations from Transformers)
+Pre-trained on large text corpora using masked language modeling. Fine-tuned for tasks like classification, NER, and question answering. Reads text bidirectionally, capturing full context.
+
+GPT (Generative Pre-trained Transformer)
+Autoregressive language model that generates text by predicting the next token. GPT-3 and GPT-4 are among the most powerful language models, capable of writing, coding, reasoning, and conversation.
+
+Large Language Models (LLMs)
+Models with billions of parameters trained on vast amounts of text. Examples: GPT-4, LLaMA, Mistral, Claude, Gemini. They exhibit emergent capabilities like few-shot learning, chain-of-thought reasoning, and instruction following.
+
+RAG (Retrieval-Augmented Generation)
+Combines information retrieval with text generation. A retriever fetches relevant documents from a knowledge base, and a generator (LLM) uses them to produce accurate, grounded answers. Reduces hallucination and keeps responses factual.
+
+Applications of NLP
+- Virtual assistants: Siri, Alexa, Google Assistant
+- Chatbots and customer support automation
+- Search engines and semantic search
+- Machine translation (Google Translate, DeepL)
+- Grammar and writing assistants (Grammarly)
+- Medical record analysis and clinical NLP
+- Legal document review and contract analysis
+- Social media monitoring and brand sentiment
+- Code generation and programming assistants (GitHub Copilot)
+- News summarization and content generation
+
+NLP Libraries and Tools
+- NLTK: Classic Python library for text processing.
+- spaCy: Industrial-strength NLP with fast pipelines.
+- Hugging Face Transformers: State-of-the-art pre-trained models.
+- Gensim: Topic modeling and word embeddings.
+- Stanford NLP: Research-grade NLP tools.
+- LangChain: Framework for building LLM-powered applications.
+
+Evaluation Metrics
+- BLEU Score: Measures quality of machine translation.
+- ROUGE: Evaluates summarization quality.
+- Perplexity: Measures how well a language model predicts a sample.
+- F1 Score: Used for NER and classification tasks.
+- BERTScore: Semantic similarity using BERT embeddings.
+
+Future of NLP
+NLP is moving toward more capable, efficient, and multilingual models. Key trends include multimodal models that combine text with images and audio, smaller but powerful models for edge deployment, better alignment with human values through RLHF (Reinforcement Learning from Human Feedback), and real-time translation and understanding across all languages.

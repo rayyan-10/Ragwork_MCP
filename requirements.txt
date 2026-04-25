@@ -1,0 +1,7 @@
+groq
+mcp
+faiss-cpu
+sentence-transformers
+python-dotenv
+httpx
+streamlit

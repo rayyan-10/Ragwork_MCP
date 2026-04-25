@@ -1,0 +1,51 @@
+Artificial Intelligence (AI)
+
+Artificial Intelligence refers to the simulation of human intelligence in machines that are programmed to think, reason, learn, and make decisions. AI systems are designed to perform tasks that typically require human cognitive abilities such as understanding language, recognizing patterns, solving problems, and adapting to new situations.
+
+History and Evolution
+AI as a field was formally founded in 1956 at the Dartmouth Conference, where researchers proposed that every aspect of learning and intelligence could in principle be simulated by a machine. Early AI focused on symbolic reasoning and rule-based systems. In the 1980s, expert systems became popular, encoding human expertise into if-then rules. The 2010s marked a turning point with the rise of deep learning, enabling machines to learn from massive datasets with unprecedented accuracy.
+
+Types of AI
+There are three broad categories of AI based on capability:
+- Narrow AI (Weak AI): Designed to perform a specific task. Examples include voice assistants like Siri, recommendation engines on Netflix, and spam filters. This is the only type of AI that exists today.
+- General AI (Strong AI): A hypothetical system that can perform any intellectual task a human can. It does not yet exist.
+- Super AI: A theoretical form of AI that surpasses human intelligence in all domains. This remains speculative.
+
+AI can also be classified by approach:
+- Reactive Machines: No memory, respond only to current input (e.g., IBM Deep Blue).
+- Limited Memory: Can use past data to inform decisions (e.g., self-driving cars).
+- Theory of Mind: Would understand emotions and social interactions (not yet achieved).
+- Self-Aware AI: Hypothetical AI with consciousness.
+
+Core Techniques
+AI is powered by several key techniques:
+- Machine Learning: Systems learn from data without being explicitly programmed.
+- Deep Learning: Uses neural networks with many layers to model complex patterns.
+- Natural Language Processing: Enables machines to understand and generate human language.
+- Computer Vision: Allows machines to interpret and understand visual information.
+- Reinforcement Learning: Agents learn by interacting with an environment and receiving rewards or penalties.
+
+Applications of AI
+AI is transforming virtually every industry:
+- Healthcare: AI assists in diagnosing diseases, analyzing medical images, drug discovery, and personalized treatment plans.
+- Finance: Used for fraud detection, algorithmic trading, credit scoring, and risk assessment.
+- Transportation: Powers autonomous vehicles, traffic management, and route optimization.
+- Education: Enables personalized learning, automated grading, and intelligent tutoring systems.
+- Retail: Drives product recommendations, inventory management, and customer service chatbots.
+- Manufacturing: Used in predictive maintenance, quality control, and robotic automation.
+- Agriculture: Helps with crop monitoring, yield prediction, and precision farming.
+
+Limitations and Challenges
+Despite its power, AI has significant limitations:
+- Data Dependency: AI models require large amounts of high-quality labeled data to train effectively.
+- Bias: If training data contains biases, the AI will replicate and amplify them.
+- Explainability: Many deep learning models are black boxes — their decisions are hard to interpret.
+- Energy Consumption: Training large AI models requires enormous computational resources.
+- Job Displacement: Automation driven by AI raises concerns about unemployment in certain sectors.
+- Security: AI systems can be vulnerable to adversarial attacks and data poisoning.
+
+Ethics in AI
+Responsible AI development requires addressing fairness, accountability, transparency, and privacy. Organizations like the EU have proposed AI regulations to ensure systems are safe, unbiased, and respect human rights. Key ethical principles include ensuring AI decisions are explainable, avoiding discrimination, protecting user data, and maintaining human oversight over critical decisions.
+
+Future of AI
+The future of AI includes advances in multimodal models (combining text, image, audio), AI agents that autonomously complete complex tasks, and closer integration with robotics. Large Language Models (LLMs) like GPT and Llama represent a major leap toward more general-purpose AI systems. Researchers are also exploring neuromorphic computing and quantum AI as next-generation foundations for more efficient and powerful intelligence.
