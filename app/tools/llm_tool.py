@@ -11,7 +11,10 @@ async def generate_response(prompt: str):
     return response.choices[0].message.content
 
 async def generate_rag_response(query: str, context: list):
-    context_text = "\n".join(context)
+    # Join chunks with separator for clarity, cap total context to ~3000 chars
+    context_text = "\n---\n".join(context)
+    if len(context_text) > 3000:
+        context_text = context_text[:3000] + "..."
 
     prompt = f"""
 You are an AI assistant.

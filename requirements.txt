@@ -1,7 +1,11 @@
 groq
-mcp
+mcp[cli]
 faiss-cpu
 sentence-transformers
 python-dotenv
 httpx
 streamlit
+uvicorn
+starlette
+pypdf
+python-docx

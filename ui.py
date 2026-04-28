@@ -1,6 +1,7 @@
 import streamlit as st
-import asyncio
-from app.main import run
+import json
+import base64
+from app.mcp.client import run_agent, run_upload
 
 st.set_page_config(
     page_title="ToolPilot",
@@ -27,7 +28,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 }
 [data-testid="stSidebar"] * { color: #e2e8f0 !important; }
 
-/* ── Input text visible fix ── */
+/* ── Input text ── */
 .stTextInput > div > div > input {
     background: #1e2235 !important;
     border: 1.5px solid rgba(102,126,234,0.4) !important;
@@ -42,6 +43,45 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     border-color: #667eea !important;
     box-shadow: 0 0 0 3px rgba(102,126,234,0.2) !important;
     outline: none !important;
+}
+
+/* ── Upload section ── */
+.upload-section {
+    background: linear-gradient(135deg, rgba(102,126,234,0.12), rgba(167,139,250,0.08));
+    border: 1.5px solid rgba(102,126,234,0.35);
+    border-radius: 14px;
+    padding: 14px 14px 10px 14px;
+    margin: 4px 0 10px 0;
+}
+.upload-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #a78bfa !important;
+    letter-spacing: 0.03em;
+    margin-bottom: 2px;
+}
+.upload-sub {
+    font-size: 0.72rem;
+    color: #667eea !important;
+    margin-bottom: 8px;
+}
+.upload-status-ok {
+    background: rgba(72,187,120,0.12);
+    border: 1px solid rgba(72,187,120,0.3);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    color: #68d391 !important;
+    margin-top: 6px;
+}
+.upload-status-info {
+    background: rgba(102,126,234,0.1);
+    border: 1px solid rgba(102,126,234,0.25);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+    color: #a78bfa !important;
+    margin-top: 6px;
 }
 
 /* ── Bubbles ── */
@@ -136,13 +176,9 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 }
 .loader-dots span:nth-child(2) { animation-delay: 0.2s; background: #a78bfa; }
 .loader-dots span:nth-child(3) { animation-delay: 0.4s; background: #764ba2; }
-.loader-label {
-    font-size: 0.8rem;
-    color: #4a5568;
-    margin-left: 4px;
-}
+.loader-label { font-size: 0.8rem; color: #4a5568; margin-left: 4px; }
 
-/* ── Fade animations ── */
+/* ── Animations ── */
 @keyframes fadeSlideLeft {
     from { opacity: 0; transform: translateX(20px); }
     to   { opacity: 1; transform: translateX(0); }
@@ -180,8 +216,15 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     box-shadow: 0 6px 20px rgba(102,126,234,0.45) !important;
 }
 
-.custom-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 14px 0; }
+/* ── File uploader override ── */
+[data-testid="stFileUploader"] {
+    background: rgba(102,126,234,0.06) !important;
+    border: 1.5px dashed rgba(102,126,234,0.4) !important;
+    border-radius: 10px !important;
+}
+[data-testid="stFileUploader"] * { color: #a78bfa !important; }
 
+.custom-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 14px 0; }
 .logo-text {
     font-size: 1.45rem; font-weight: 700;
     background: linear-gradient(135deg, #667eea, #a78bfa);
@@ -192,7 +235,14 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 """, unsafe_allow_html=True)
 
 # ── Session state ─────────────────────────────────────────────────────────────
-for key, default in [("messages", []), ("total_queries", 0), ("tools_used", []), ("is_thinking", False)]:
+for key, default in [
+    ("messages", []),
+    ("total_queries", 0),
+    ("tools_used", []),
+    ("is_thinking", False),
+    ("upload_status", {}),       # tracks upload results per filename
+    ("last_uploaded", None),     # tracks last uploaded filename
+]:
     if key not in st.session_state:
         st.session_state[key] = default
 
@@ -202,6 +252,7 @@ with st.sidebar:
     st.markdown('<div class="logo-sub">Intelligent Workflow Automation</div>', unsafe_allow_html=True)
     st.markdown('<hr class="custom-divider">', unsafe_allow_html=True)
 
+    # Stats
     col1, col2 = st.columns(2)
     with col1:
         st.markdown(f'<div class="metric-card"><div class="metric-value">{st.session_state.total_queries}</div><div class="metric-label">Queries</div></div>', unsafe_allow_html=True)
@@ -209,10 +260,56 @@ with st.sidebar:
         st.markdown(f'<div class="metric-card"><div class="metric-value">{len(set(st.session_state.tools_used))}</div><div class="metric-label">Tools</div></div>', unsafe_allow_html=True)
 
     st.markdown('<hr class="custom-divider">', unsafe_allow_html=True)
-    st.markdown("**Available Tools**")
 
+    # ── Upload Document (above tools) ─────────────────────────────────────────
+    st.markdown("""
+    <div class="upload-section">
+        <div class="upload-title">📎 Upload Document</div>
+        <div class="upload-sub">PDF, DOCX or TXT · Ask questions after upload</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    uploaded_file = st.file_uploader(
+        label="upload",
+        type=["pdf", "docx", "txt"],
+        label_visibility="collapsed",
+        key="doc_uploader"
+    )
+
+    # Process upload WITHOUT triggering rerun that clears chat
+    if uploaded_file is not None:
+        fname = uploaded_file.name
+        if fname not in st.session_state.upload_status:
+            # Mark as processing to avoid re-upload on next rerun
+            st.session_state.upload_status[fname] = "processing"
+            with st.spinner(f"Uploading {fname}..."):
+                try:
+                    content_b64 = base64.b64encode(uploaded_file.read()).decode("utf-8")
+                    result = run_upload(fname, content_b64)
+                    st.session_state.upload_status[fname] = result
+                    st.session_state.last_uploaded = fname
+                except Exception as e:
+                    st.session_state.upload_status[fname] = f"❌ Upload failed: {str(e)}"
+
+        # Show status without rerun
+        status = st.session_state.upload_status.get(fname, "")
+        if status and status != "processing":
+            css_class = "upload-status-ok" if "✅" in status or "successfully" in status.lower() else "upload-status-info"
+            st.markdown(f'<div class="{css_class}">{status}</div>', unsafe_allow_html=True)
+
+    # Show last uploaded doc indicator
+    if st.session_state.last_uploaded:
+        st.markdown(
+            f'<div style="font-size:0.72rem;color:#667eea;margin-top:4px;">📄 Active: {st.session_state.last_uploaded}</div>',
+            unsafe_allow_html=True
+        )
+
+    st.markdown('<hr class="custom-divider">', unsafe_allow_html=True)
+
+    # ── Available Tools ───────────────────────────────────────────────────────
+    st.markdown("**Available Tools**")
     tools_info = {
-        "🔍 rag_tool": "Search local documents",
+        "🔍 rag_tool": "Search documents",
         "🌐 web_tool": "Live web search",
         "📄 file_tool": "Read local files",
         "✂️ summary_tool": "Summarize text",
@@ -230,7 +327,7 @@ with st.sidebar:
         "Latest AI news",
         "Summarize the file",
         "Store: Python is great",
-        "SELECT * FROM student",
+        "List all tables",
     ]
     for ex in examples:
         if st.button(ex, key=f"ex_{ex}", use_container_width=True):
@@ -261,7 +358,7 @@ st.markdown("""
 with st.container():
     if not st.session_state.messages and not st.session_state.is_thinking:
         st.markdown("""
-        <div style="text-align:center;padding:70px 20px;color:#2d3748;">
+        <div style="text-align:center;padding:70px 20px;">
             <div style="font-size:3.5rem;">🧭</div>
             <div style="font-size:1rem;margin-top:14px;color:#4a5568;">
                 Ask me anything — I'll pick the right tool automatically.
@@ -272,12 +369,10 @@ with st.container():
             if msg["role"] == "user":
                 st.markdown(f'<div class="user-bubble">👤 &nbsp;{msg["content"]}</div>', unsafe_allow_html=True)
             else:
-                # Build status rows
                 status_html = ""
                 for s in msg.get("statuses", []):
                     status_html += f'<div class="status-row"><span class="status-tool">{s["tool"]}</span><span>{s["status"]}</span></div>'
 
-                # Build plan badges
                 plan_html = ""
                 if msg.get("plan"):
                     steps = msg["plan"].get("steps", [])
@@ -290,7 +385,6 @@ with st.container():
                     unsafe_allow_html=True
                 )
 
-        # Animated loader while thinking
         if st.session_state.is_thinking:
             st.markdown("""
             <div class="loader-dots">
@@ -325,10 +419,9 @@ if submitted and user_input.strip():
 if st.session_state.is_thinking:
     last_user = next((m["content"] for m in reversed(st.session_state.messages) if m["role"] == "user"), None)
     if last_user:
-        # Pass last 3 exchanges (excluding current user message) as history
         history = st.session_state.messages[:-1][-6:]
         try:
-            plan, result, tool_statuses = asyncio.run(run(last_user, history=history))
+            plan, result, tool_statuses = run_agent(last_user, history=history)
             for step in plan.get("steps", []):
                 st.session_state.tools_used.append(step.get("tool", ""))
             st.session_state.messages.append({

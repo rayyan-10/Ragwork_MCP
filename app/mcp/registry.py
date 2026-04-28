@@ -83,4 +83,16 @@ TOOL_SCHEMAS = [
             "required": ["input"]
         }
     },
+    {
+        "name": "agent",
+        "description": "Runs the full ToolPilot agent pipeline — planner selects tools and executor runs them automatically.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "input": {"type": "string", "description": "Natural language query"},
+                "history": {"type": "array", "description": "Recent conversation history", "items": {"type": "object"}}
+            },
+            "required": ["input"]
+        }
+    },
 ]
