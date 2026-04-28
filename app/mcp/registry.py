@@ -1,3 +1,10 @@
+"""
+registry.py
+-----------
+Central tool registry for ToolPilot.
+Maps tool names to their async handler functions (TOOLS dict) and
+defines MCP-compliant schemas (TOOL_SCHEMAS) for tool discovery.
+"""
 from app.tools.file_tool import read_file
 from app.tools.summary_tool import summarize
 from app.tools.rag_tool import search

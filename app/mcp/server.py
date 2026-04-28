@@ -1,3 +1,11 @@
+"""
+server.py
+---------
+ToolPilot MCP Server built with FastMCP.
+Exposes all tools via SSE transport on http://localhost:8000/sse.
+Each tool is registered with @mcp.tool() and callable by any MCP client.
+The special 'agent' tool runs the full planner+executor pipeline.
+"""
 import asyncio
 import json
 from mcp.server.fastmcp import FastMCP

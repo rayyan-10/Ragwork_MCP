@@ -1,3 +1,10 @@
+"""
+planner.py
+----------
+The agent's brain. Given a user query and optional conversation history,
+the planner uses an LLM to decide which tools to call and in what order.
+Returns a structured plan as a dict: {"steps": [{"tool": ..., "input": ...}]}
+"""
 from app.tools.llm_tool import generate_response
 from app.config.settings import DOCS_PATH
 import os

@@ -1,3 +1,10 @@
+"""
+client.py
+---------
+MCP client for ToolPilot's Streamlit UI.
+Connects to the FastMCP server via SSE and calls tools over the MCP protocol.
+Provides synchronous wrappers (run_agent, run_upload) for use in Streamlit.
+"""
 import asyncio
 import json
 from mcp.client.session import ClientSession

@@ -1,3 +1,9 @@
+"""
+main.py
+-------
+Entry point for the ToolPilot agent pipeline.
+Provides the run() coroutine used by both the CLI and the MCP server.
+"""
 import asyncio
 from app.agent.planner import plan_task
 from app.agent.executor import execute

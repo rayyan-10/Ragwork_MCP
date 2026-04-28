@@ -1,3 +1,10 @@
+"""
+executor.py
+-----------
+Executes a plan produced by the planner.
+Iterates through each step, calls the appropriate tool, handles output
+chaining between steps, and returns the final result with per-tool statuses.
+"""
 from app.mcp.registry import TOOLS
 from app.utils.logger import get_logger
 
@@ -5,6 +12,10 @@ logger = get_logger("executor")
 
 # Human-readable status messages per tool + result pattern
 def _make_status(tool_name: str, tool_input: str, result: str) -> str:
+    """
+    Generates a human-readable status string for a tool execution.
+    Inspects the result to determine success, failure, or partial outcome.
+    """
     r = result.lower()
     if tool_name == "db_tool":
         if "error" in r:
