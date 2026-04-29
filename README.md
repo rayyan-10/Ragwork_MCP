@@ -160,7 +160,8 @@ Then open `http://localhost:8501` in your browser.
 |------|---------|-------------|
 | `rag_tool` | Knowledge questions, document queries | Semantic search over local/uploaded documents using FAISS. Answers are LLM-generated from retrieved chunks. Long answers are auto-summarized. |
 | `db_tool` | Database operations | Accepts natural language or raw SQL. Supports CREATE, INSERT, SELECT, UPDATE, DELETE, table inspection, and existence checks. Uses LLM for NL-to-SQL conversion. |
-| `memory_tool` | "Store/remember/save this..." | Saves text entries to a persistent JSON memory file. |
+| `memory_tool` | "Store/remember/save this..." | Saves text entries with timestamp and auto-tag to a persistent JSON memory file. Prevents duplicate entries. |
+| `recall_memory` | "Show my memories / what did I store..." | Searches and retrieves previously saved memories by keyword. Use "all" to list everything. |
 | `file_tool` | "Read the file / summarize the file" | Reads local text files from the `data/` folder. |
 | `summary_tool` | "Summarize this: ..." | Summarizes any provided text into 2–3 concise sentences using the LLM. |
 | `web_tool` | "Latest news / current events" | Searches the web via DuckDuckGo Instant Answer API. |
@@ -213,7 +214,21 @@ Save any information for later reference:
 "Save: API rate limit is 30 requests per minute"
 ```
 
-After storing, you can reference it in future sessions by reading `data/memory.json`.
+Retrieve stored memories:
+
+```
+"Show all my memories"
+"What did I store about Python?"
+"List memories"
+```
+
+Each memory entry is saved with:
+- A unique ID
+- Timestamp of when it was stored
+- Auto-assigned category tag (`ai`, `database`, `document`, `web`, `general`)
+- Duplicate prevention — same content won't be stored twice
+
+> **Note:** `memory_tool` is for saving information. `recall_memory` is for retrieving what you previously saved. If you ask a question like *"What are the types of memory in AI?"* — that is a knowledge question and will be answered from documents via `rag_tool`, not from your stored memories.
 
 ---
 

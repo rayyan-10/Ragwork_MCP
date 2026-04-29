@@ -12,123 +12,149 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 #MainMenu, footer, header { visibility: hidden; }
 
+/* ── Background: bright gradient ── */
 .stApp {
-    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+    background: linear-gradient(135deg, #e8f4fd 0%, #f0e6ff 40%, #fce4ec 100%);
     min-height: 100vh;
 }
 
+/* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: rgba(255,255,255,0.03);
-    border-right: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(180deg, #ffffff 0%, #f3e8ff 100%);
+    border-right: 2px solid rgba(124,58,237,0.15);
+    box-shadow: 4px 0 20px rgba(124,58,237,0.08);
 }
-[data-testid="stSidebar"] * { color: #e2e8f0 !important; }
 
-/* ── Input text ── */
+/* ── Input ── */
 .stTextInput > div > div > input {
-    background: #1e2235 !important;
-    border: 1.5px solid rgba(102,126,234,0.4) !important;
-    border-radius: 14px !important;
-    color: #f0f4ff !important;
-    padding: 13px 18px !important;
+    background: #ffffff !important;
+    border: 2px solid rgba(124,58,237,0.3) !important;
+    border-radius: 16px !important;
+    color: #1e1b4b !important;
+    padding: 14px 20px !important;
     font-size: 0.95rem !important;
-    caret-color: #a78bfa !important;
+    caret-color: #7c3aed !important;
+    box-shadow: 0 2px 12px rgba(124,58,237,0.08) !important;
 }
-.stTextInput > div > div > input::placeholder { color: #4a5568 !important; }
+.stTextInput > div > div > input::placeholder { color: #a78bfa !important; }
 .stTextInput > div > div > input:focus {
-    border-color: #667eea !important;
-    box-shadow: 0 0 0 3px rgba(102,126,234,0.2) !important;
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 4px rgba(124,58,237,0.15) !important;
     outline: none !important;
 }
 
 /* ── Upload section ── */
 .upload-section {
-    background: linear-gradient(135deg, rgba(102,126,234,0.12), rgba(167,139,250,0.08));
-    border: 1.5px solid rgba(102,126,234,0.35);
-    border-radius: 14px;
-    padding: 14px 14px 10px 14px;
-    margin: 4px 0 10px 0;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 6px 0 10px 0;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.3);
 }
 .upload-title {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #a78bfa !important;
-    letter-spacing: 0.03em;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #ffffff !important;
+    letter-spacing: 0.04em;
     margin-bottom: 2px;
 }
 .upload-sub {
-    font-size: 0.72rem;
-    color: #667eea !important;
-    margin-bottom: 8px;
+    font-size: 0.73rem;
+    color: rgba(255,255,255,0.8) !important;
+    margin-bottom: 10px;
 }
 .upload-status-ok {
-    background: rgba(72,187,120,0.12);
-    border: 1px solid rgba(72,187,120,0.3);
-    border-radius: 8px;
-    padding: 7px 10px;
-    font-size: 0.78rem;
-    color: #68d391 !important;
-    margin-top: 6px;
+    background: rgba(255,255,255,0.95);
+    border: 1.5px solid #7c3aed;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: #4c1d95 !important;
+    margin-top: 8px;
+    font-weight: 600;
 }
 .upload-status-info {
-    background: rgba(102,126,234,0.1);
-    border: 1px solid rgba(102,126,234,0.25);
-    border-radius: 8px;
-    padding: 7px 10px;
-    font-size: 0.78rem;
-    color: #a78bfa !important;
+    background: rgba(255,255,255,0.95);
+    border: 1.5px solid #db2777;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: #831843 !important;
+    margin-top: 8px;
+    font-weight: 600;
+}
+.active-doc {
+    font-size: 0.75rem;
+    color: #4c1d95 !important;
     margin-top: 6px;
+    font-weight: 700;
+    background: rgba(124,58,237,0.08);
+    border-radius: 8px;
+    padding: 5px 10px;
+    border: 1px solid rgba(124,58,237,0.2);
 }
 
-/* ── Bubbles ── */
+/* ── File uploader override ── */
+[data-testid="stFileUploader"] {
+    background: rgba(255,255,255,0.9) !important;
+    border: 2px dashed rgba(124,58,237,0.5) !important;
+    border-radius: 12px !important;
+}
+[data-testid="stFileUploader"] * { color: #4c1d95 !important; }
+[data-testid="stFileUploaderDropzoneInstructions"] * { color: #7c3aed !important; }
+
+/* ── User bubble ── */
 .user-bubble {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
     color: #fff;
     padding: 14px 20px;
-    border-radius: 20px 20px 4px 20px;
+    border-radius: 22px 22px 4px 22px;
     margin: 10px 0 10px 80px;
     font-size: 0.95rem;
     line-height: 1.7;
-    box-shadow: 0 4px 20px rgba(102,126,234,0.35);
+    box-shadow: 0 6px 24px rgba(124,58,237,0.35);
     animation: fadeSlideLeft 0.3s ease;
 }
+
+/* ── Agent bubble ── */
 .agent-bubble {
-    background: rgba(255,255,255,0.055);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #e2e8f0;
-    padding: 14px 20px;
-    border-radius: 20px 20px 20px 4px;
+    background: #ffffff;
+    border: 1.5px solid rgba(124,58,237,0.15);
+    color: #1e1b4b;
+    padding: 16px 20px;
+    border-radius: 22px 22px 22px 4px;
     margin: 10px 80px 10px 0;
     font-size: 0.95rem;
     line-height: 1.7;
-    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(124,58,237,0.1);
     animation: fadeSlideRight 0.3s ease;
 }
 
 /* ── Plan box ── */
 .plan-box {
-    background: rgba(102,126,234,0.07);
-    border: 1px solid rgba(102,126,234,0.18);
-    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(219,39,119,0.04));
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 12px;
     padding: 10px 14px;
     margin-top: 10px;
     font-size: 0.8rem;
-    color: #a0aec0;
+    color: #6d28d9;
 }
 .tool-badge {
     display: inline-block;
-    background: rgba(102,126,234,0.18);
-    border: 1px solid rgba(102,126,234,0.35);
-    color: #a78bfa;
-    padding: 2px 10px;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    color: #ffffff;
+    padding: 3px 12px;
     border-radius: 20px;
-    font-size: 0.73rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
     margin: 2px 3px;
+    box-shadow: 0 2px 8px rgba(124,58,237,0.3);
 }
 
 /* ── Status row ── */
@@ -138,99 +164,149 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     gap: 8px;
     padding: 5px 0;
     font-size: 0.82rem;
-    color: #cbd5e0;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    color: #4c1d95;
+    border-top: 1px solid rgba(124,58,237,0.1);
     margin-top: 6px;
 }
 .status-tool {
-    background: rgba(167,139,250,0.15);
-    color: #a78bfa;
-    padding: 1px 8px;
+    background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    color: #7c3aed;
+    padding: 2px 10px;
     border-radius: 12px;
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
+    border: 1px solid rgba(124,58,237,0.2);
 }
 
 /* ── Animated loader ── */
 @keyframes pulse-dot {
     0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40% { transform: scale(1); opacity: 1; }
+    40% { transform: scale(1.1); opacity: 1; }
 }
 .loader-dots {
     display: flex;
     align-items: center;
     gap: 6px;
     padding: 14px 20px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px 20px 20px 4px;
+    background: #ffffff;
+    border: 1.5px solid rgba(124,58,237,0.2);
+    border-radius: 22px 22px 22px 4px;
     margin: 10px 80px 10px 0;
     width: fit-content;
+    box-shadow: 0 4px 16px rgba(124,58,237,0.1);
 }
 .loader-dots span {
-    width: 8px; height: 8px;
-    background: #667eea;
+    width: 9px; height: 9px;
     border-radius: 50%;
     display: inline-block;
     animation: pulse-dot 1.2s infinite ease-in-out;
 }
-.loader-dots span:nth-child(2) { animation-delay: 0.2s; background: #a78bfa; }
-.loader-dots span:nth-child(3) { animation-delay: 0.4s; background: #764ba2; }
-.loader-label { font-size: 0.8rem; color: #4a5568; margin-left: 4px; }
+.loader-dots span:nth-child(1) { background: #7c3aed; }
+.loader-dots span:nth-child(2) { background: #db2777; animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { background: #f59e0b; animation-delay: 0.4s; }
+.loader-label { font-size: 0.8rem; color: #7c3aed; margin-left: 6px; font-weight: 600; }
 
 /* ── Animations ── */
 @keyframes fadeSlideLeft {
-    from { opacity: 0; transform: translateX(20px); }
+    from { opacity: 0; transform: translateX(24px); }
     to   { opacity: 1; transform: translateX(0); }
 }
 @keyframes fadeSlideRight {
-    from { opacity: 0; transform: translateX(-20px); }
+    from { opacity: 0; transform: translateX(-24px); }
     to   { opacity: 1; transform: translateX(0); }
 }
 
 /* ── Metric cards ── */
 .metric-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f5f3ff);
+    border: 1.5px solid rgba(124,58,237,0.2);
+    border-radius: 14px;
     padding: 14px;
     text-align: center;
+    box-shadow: 0 2px 12px rgba(124,58,237,0.08);
 }
-.metric-value { font-size: 1.7rem; font-weight: 700; color: #a78bfa; }
-.metric-label { font-size: 0.72rem; color: #4a5568; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.metric-label {
+    font-size: 0.72rem;
+    color: #6d28d9;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
 
-/* ── Button ── */
+/* ── Buttons ── */
 .stButton > button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%) !important;
     color: white !important;
     border: none !important;
     border-radius: 12px !important;
-    padding: 9px 20px !important;
-    font-weight: 600 !important;
-    font-size: 0.88rem !important;
+    padding: 9px 18px !important;
+    font-weight: 700 !important;
+    font-size: 0.87rem !important;
     transition: all 0.2s ease !important;
-    box-shadow: 0 4px 14px rgba(102,126,234,0.3) !important;
+    box-shadow: 0 4px 14px rgba(124,58,237,0.3) !important;
 }
 .stButton > button:hover {
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(102,126,234,0.45) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(124,58,237,0.4) !important;
 }
 
-/* ── File uploader override ── */
-[data-testid="stFileUploader"] {
-    background: rgba(102,126,234,0.06) !important;
-    border: 1.5px dashed rgba(102,126,234,0.4) !important;
-    border-radius: 10px !important;
+/* ── Divider ── */
+.custom-divider {
+    border: none;
+    border-top: 1.5px solid rgba(124,58,237,0.12);
+    margin: 14px 0;
 }
-[data-testid="stFileUploader"] * { color: #a78bfa !important; }
 
-.custom-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 14px 0; }
+/* ── Logo ── */
 .logo-text {
-    font-size: 1.45rem; font-weight: 700;
-    background: linear-gradient(135deg, #667eea, #a78bfa);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
-.logo-sub { font-size: 0.72rem; color: #4a5568; margin-top: -3px; }
+.logo-sub {
+    font-size: 0.72rem;
+    color: #7c3aed;
+    margin-top: -2px;
+    font-weight: 500;
+}
+
+/* ── Tool list items ── */
+.tool-item {
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(124,58,237,0.08);
+}
+.tool-name { font-size: 0.84rem; color: #1e1b4b; font-weight: 600; }
+.tool-desc { font-size: 0.73rem; color: #7c3aed; }
+
+/* ── Empty state ── */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+.empty-icon { font-size: 4rem; }
+.empty-text {
+    font-size: 1rem;
+    margin-top: 16px;
+    color: #6d28d9;
+    font-weight: 500;
+}
+.empty-sub {
+    font-size: 0.82rem;
+    color: #a78bfa;
+    margin-top: 6px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -240,8 +316,8 @@ for key, default in [
     ("total_queries", 0),
     ("tools_used", []),
     ("is_thinking", False),
-    ("upload_status", {}),       # tracks upload results per filename
-    ("last_uploaded", None),     # tracks last uploaded filename
+    ("upload_status", {}),
+    ("last_uploaded", None),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -261,11 +337,11 @@ with st.sidebar:
 
     st.markdown('<hr class="custom-divider">', unsafe_allow_html=True)
 
-    # ── Upload Document (above tools) ─────────────────────────────────────────
+    # ── Upload Document ───────────────────────────────────────────────────────
     st.markdown("""
     <div class="upload-section">
         <div class="upload-title">📎 Upload Document</div>
-        <div class="upload-sub">PDF, DOCX or TXT · Ask questions after upload</div>
+        <div class="upload-sub">PDF · DOCX · TXT &nbsp;|&nbsp; Ask questions after upload</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -276,13 +352,11 @@ with st.sidebar:
         key="doc_uploader"
     )
 
-    # Process upload WITHOUT triggering rerun that clears chat
     if uploaded_file is not None:
         fname = uploaded_file.name
         if fname not in st.session_state.upload_status:
-            # Mark as processing to avoid re-upload on next rerun
             st.session_state.upload_status[fname] = "processing"
-            with st.spinner(f"Uploading {fname}..."):
+            with st.spinner(f"Indexing {fname}..."):
                 try:
                     content_b64 = base64.b64encode(uploaded_file.read()).decode("utf-8")
                     result = run_upload(fname, content_b64)
@@ -291,36 +365,35 @@ with st.sidebar:
                 except Exception as e:
                     st.session_state.upload_status[fname] = f"❌ Upload failed: {str(e)}"
 
-        # Show status without rerun
         status = st.session_state.upload_status.get(fname, "")
         if status and status != "processing":
-            css_class = "upload-status-ok" if "✅" in status or "successfully" in status.lower() else "upload-status-info"
+            css_class = "upload-status-ok" if ("✅" in status or "successfully" in status.lower()) else "upload-status-info"
             st.markdown(f'<div class="{css_class}">{status}</div>', unsafe_allow_html=True)
 
-    # Show last uploaded doc indicator
     if st.session_state.last_uploaded:
         st.markdown(
-            f'<div style="font-size:0.72rem;color:#667eea;margin-top:4px;">📄 Active: {st.session_state.last_uploaded}</div>',
+            f'<div class="active-doc">📄 Active: {st.session_state.last_uploaded}</div>',
             unsafe_allow_html=True
         )
 
     st.markdown('<hr class="custom-divider">', unsafe_allow_html=True)
 
     # ── Available Tools ───────────────────────────────────────────────────────
-    st.markdown("**Available Tools**")
+    st.markdown('<span style="font-size:0.82rem;font-weight:700;color:#4c1d95;text-transform:uppercase;letter-spacing:0.06em;">Available Tools</span>', unsafe_allow_html=True)
     tools_info = {
-        "🔍 rag_tool": "Search documents",
-        "🌐 web_tool": "Live web search",
-        "📄 file_tool": "Read local files",
-        "✂️ summary_tool": "Summarize text",
-        "🗄️ db_tool": "Query database",
-        "🧠 memory_tool": "Save to memory",
+        "🔍 rag_tool":      "Search documents",
+        "🌐 web_tool":      "Live web search",
+        "📄 file_tool":     "Read local files",
+        "✂️ summary_tool":  "Summarize text",
+        "🗄️ db_tool":       "Query database",
+        "🧠 memory_tool":   "Save to memory",
+        "💭 recall_memory": "Retrieve memories",
     }
     for tool, desc in tools_info.items():
-        st.markdown(f'<div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);"><span style="font-size:0.84rem;color:#e2e8f0;">{tool}</span><br><span style="font-size:0.73rem;color:#4a5568;">{desc}</span></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="tool-item"><span class="tool-name">{tool}</span><br><span class="tool-desc">{desc}</span></div>', unsafe_allow_html=True)
 
     st.markdown('<hr class="custom-divider">', unsafe_allow_html=True)
-    st.markdown("**Try These**")
+    st.markdown('<span style="font-size:0.82rem;font-weight:700;color:#4c1d95;text-transform:uppercase;letter-spacing:0.06em;">Try These</span>', unsafe_allow_html=True)
 
     examples = [
         "What is machine learning?",
@@ -343,13 +416,13 @@ with st.sidebar:
 
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("""
-<div style="text-align:center;padding:20px 0 8px 0;">
-    <h1 style="font-size:2.1rem;font-weight:700;background:linear-gradient(135deg,#667eea,#a78bfa);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:0;">
+<div style="text-align:center;padding:24px 0 10px 0;">
+    <h1 style="font-size:2.4rem;font-weight:800;background:linear-gradient(135deg,#7c3aed,#db2777,#f59e0b);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:0;letter-spacing:-0.02em;">
         ToolPilot Agent
     </h1>
-    <p style="color:#4a5568;font-size:0.85rem;margin-top:5px;">
-        Powered by Groq &nbsp;·&nbsp; RAG &nbsp;·&nbsp; SQLite &nbsp;·&nbsp; MCP
+    <p style="color:#7c3aed;font-size:0.88rem;margin-top:6px;font-weight:500;">
+        Powered by LLM &nbsp;·&nbsp; RAG &nbsp;·&nbsp; SQLite &nbsp;·&nbsp; MCP
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -358,11 +431,10 @@ st.markdown("""
 with st.container():
     if not st.session_state.messages and not st.session_state.is_thinking:
         st.markdown("""
-        <div style="text-align:center;padding:70px 20px;">
-            <div style="font-size:3.5rem;">🧭</div>
-            <div style="font-size:1rem;margin-top:14px;color:#4a5568;">
-                Ask me anything — I'll pick the right tool automatically.
-            </div>
+        <div class="empty-state">
+            <div class="empty-icon">🧭</div>
+            <div class="empty-text">Ask me anything</div>
+            <div class="empty-sub">I'll automatically pick the right tool and get you an answer.</div>
         </div>""", unsafe_allow_html=True)
     else:
         for msg in st.session_state.messages:
@@ -389,7 +461,7 @@ with st.container():
             st.markdown("""
             <div class="loader-dots">
                 <span></span><span></span><span></span>
-                <span class="loader-label">Agent is thinking...</span>
+                <span class="loader-label">Thinking...</span>
             </div>""", unsafe_allow_html=True)
 
 # ── Input form ────────────────────────────────────────────────────────────────

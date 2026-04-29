@@ -3,14 +3,15 @@ server.py
 ---------
 ToolPilot MCP Server built with FastMCP.
 Exposes all tools via SSE transport on http://localhost:8000/sse.
-Each tool is registered with @mcp.tool() and callable by any MCP client.
+Each tool is registered with @mcp.tool() — FastMCP auto-generates schemas from
+function signatures and docstrings, so no manual schema definitions are needed.
 The special 'agent' tool runs the full planner+executor pipeline.
 """
 import asyncio
 import json
 from mcp.server.fastmcp import FastMCP
 
-from app.mcp.registry import TOOLS, TOOL_SCHEMAS
+from app.mcp.registry import TOOLS
 from app.agent.planner import plan_task
 from app.agent.executor import execute
 from app.utils.logger import get_logger
@@ -49,8 +50,14 @@ async def db_tool(input: str) -> str:
 
 @mcp.tool()
 async def memory_tool(input: str) -> str:
-    """Saves a piece of information to persistent local memory."""
+    """Saves a piece of information to persistent local memory with timestamp and auto-tag."""
     return await TOOLS["memory_tool"](input)
+
+
+@mcp.tool()
+async def recall_memory(input: str) -> str:
+    """Searches and retrieves stored memories by keyword. Use 'all' to list everything."""
+    return await TOOLS["recall_memory"](input)
 
 
 @mcp.tool()
